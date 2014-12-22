@@ -1,0 +1,34 @@
+<RCC>
+    <qresource prefix="/imgs">
+        <file>image/favicon.ico</file>
+        <file>image/scanline.jpg</file>
+        <file>image/standardposture.jpg</file>
+    </qresource>
+    <qresource prefix="/background">
+        <file>image/background/A.jpg</file>
+        <file>image/background/N.jpg</file>
+        <file>image/background/X.jpg</file>
+        <file>image/background/B.jpg</file>
+        <file>image/background/D.jpg</file>
+        <file>image/background/E.jpg</file>
+        <file>image/background/F.jpg</file>
+        <file>image/background/G.jpg</file>
+        <file>image/background/H.jpg</file>
+        <file>image/background/I.jpg</file>
+        <file>image/background/J.jpg</file>
+        <file>image/background/K.jpg</file>
+        <file>image/background/L.jpg</file>
+        <file>image/background/M.jpg</file>
+        <file>image/background/O.jpg</file>
+        <file>image/background/P.jpg</file>
+        <file>image/background/Q.jpg</file>
+        <file>image/background/R.jpg</file>
+        <file>image/background/S.jpg</file>
+        <file>image/background/T.jpg</file>
+        <file>image/background/U.jpg</file>
+        <file>image/background/V.jpg</file>
+        <file>image/background/W.jpg</file>
+        <file>image/background/Y.jpg</file>
+        <file>image/background/Z.jpg</file>
+    </qresource>
+</RCC>
