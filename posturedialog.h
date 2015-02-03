@@ -80,6 +80,8 @@ public slots:
     void httpReadyRead();
     void httpFinished();
     void submitAdvise();
+    void closeApp();
+
 private:
     Ui::PostureDialog *ui;
     DetectThread detectThread;
@@ -96,7 +98,7 @@ private:
     QAction *    pauseHalfOneHoueAction;
     QAction *    pauseOneHoueAction;
 
-
+    QAction *    rescanAction;
 
 
 
@@ -116,8 +118,10 @@ private:
     QMenuBar *menubar;
     QAction *adviseAction;
 
-
-
+    static const int STATUS_INIT=0;
+    static const int STATUS_DETACT=1;
+    static const int STATUS_STOP=2;
+    void changeActionShowStatus(int flag);
 };
 
 #endif // POSTUREDIALOG_H

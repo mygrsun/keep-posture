@@ -25,7 +25,6 @@ PostureDialog::PostureDialog(QWidget *parent) :
     connect(ui->beginScanBtn,SIGNAL(clicked()),this,SLOT(scanPosture()));
     connect(ui->reScanPostureBtn,SIGNAL(clicked()),this,SLOT(reScanPosture()));
     connect(ui->pauseBtn,SIGNAL(clicked()),this,SLOT(pauseBtnClick()));
-    connect(ui->submitAdviseBtn,SIGNAL(clicked()),this,SLOT(submitAdvise()));
     connect(&(this->detectThread),SIGNAL(getResult(Detectheadresult)),this,SLOT(getResult(Detectheadresult)));
     connect(&(this->timer),SIGNAL(timeout()),this,SLOT(playCamer()));
     connect(&(this->pauseTimer),SIGNAL(timeout()),this,SLOT(pauseDetectTimeout()));
@@ -51,11 +50,12 @@ PostureDialog::PostureDialog(QWidget *parent) :
     connect(pauseHalfOneHoueAction,SIGNAL(triggered()),this,SLOT(pauseHalfOneHoueActionClick()));
     pauseOneHoueAction = new QAction(tr("休息一个小时"),this);
     connect(pauseOneHoueAction,SIGNAL(triggered()),this,SLOT(pauseOneHoueActionClick()));
-    QAction *    rescanAction = new QAction("重新扫描坐姿",this);
+    rescanAction = new QAction("重新扫描坐姿",this);
     connect(rescanAction,SIGNAL(triggered()),this,SLOT(reScanPosture()));
     QAction *quitAction=new QAction("退出",this);
 
-    connect( quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+    //    connect( quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect( quitAction, SIGNAL(triggered()), this, SLOT(closeApp()));
 
 
     QMenu *myMenu = new QMenu((QWidget*)QApplication::desktop());
@@ -74,11 +74,54 @@ PostureDialog::PostureDialog(QWidget *parent) :
     this->adviseAction=new QAction("建议",this);
     connect(this->adviseAction,SIGNAL(triggered()),this,SLOT(reScanPosture()));
 
-    this->menubar->addAction(this->adviseAction);
-    this->menubar->show();
+    //    this->menubar->addAction(this->adviseAction);
+    //    this->menubar->show();
+    this->changeActionShowStatus(this->STATUS_INIT);
 
 }
 
+void PostureDialog::closeApp(){
+    this->detectThread.setRunFlag(false);
+    qApp->quit();
+
+
+}
+
+void PostureDialog::changeActionShowStatus(int flag){
+    switch(flag){
+    case this->STATUS_INIT://初始状态
+        this->pauseHalfOneHoueAction->setVisible(false);
+        this->pauseOneHoueAction->setVisible(false);
+        this->pauseAction->setVisible(false);
+        this->rescanAction->setText(tr("扫描坐姿"));
+        break;
+
+
+    case this->STATUS_DETACT://正常状态
+        this->pauseHalfOneHoueAction->setVisible(true);
+        this->pauseOneHoueAction->setVisible(true);
+
+        this->pauseAction->setVisible(true);
+        this->pauseAction->setText(tr("休息"));
+
+        this->rescanAction->setText(tr("重新扫描坐姿"));
+        break;
+
+
+    case this->STATUS_STOP://暂停状态
+
+        this->pauseHalfOneHoueAction->setVisible(false);
+        this->pauseOneHoueAction->setVisible(false);
+        this->pauseAction->setVisible(true);
+        this->pauseAction->setText(tr("继续"));
+
+        this->rescanAction->setText(tr("重新扫描坐姿"));
+        break;
+
+    }
+
+
+}
 void PostureDialog::traversalControl(const QObjectList& q)
 {
     for(int i=0;i<q.length();i++)
@@ -168,13 +211,10 @@ void PostureDialog::initResolution(){
 
     ui->stackedWidget->setGeometry(ui->stackedWidget->x()*factorWidth,ui->stackedWidget->y()*factorHeight,ui->stackedWidget->width()*factorWidth,ui->stackedWidget->height()*factorHeight);
 
-    ui->label->setGeometry(ui->label->x()*factorWidth,ui->label->y()*factorHeight,ui->label->width()*factorWidth,ui->label->height()*factorHeight);
     ui->reScanPostureBtn->setGeometry(ui->reScanPostureBtn->x()*factorWidth,ui->reScanPostureBtn->y()*factorHeight,ui->reScanPostureBtn->width()*factorWidth,ui->reScanPostureBtn->height()*factorHeight);
     ui->pframeLable->setGeometry(ui->pframeLable->x()*factorWidth,ui->pframeLable->y()*factorHeight,ui->pframeLable->width()*factorWidth,ui->pframeLable->height()*factorHeight);
     ui->pauseBtn->setGeometry(ui->pauseBtn->x()*factorWidth,ui->pauseBtn->y()*factorHeight,ui->pauseBtn->width()*factorWidth,ui->pauseBtn->height()*factorHeight);
-    ui->noticeLable->setGeometry(ui->noticeLable->x()*factorWidth,ui->noticeLable->y()*factorHeight,ui->noticeLable->width()*factorWidth,ui->noticeLable->height()*factorHeight);
     ui->label_4->setGeometry(ui->label_4->x()*factorWidth,ui->label_4->y()*factorHeight,ui->label_4->width()*factorWidth,ui->label_4->height()*factorHeight);
-    ui->label_5->setGeometry(ui->label_5->x()*factorWidth,ui->label_5->y()*factorHeight,ui->label_5->width()*factorWidth,ui->label_5->height()*factorHeight);
     ui->label_3->setGeometry(ui->label_3->x()*factorWidth,ui->label_3->y()*factorHeight,ui->label_3->width()*factorWidth,ui->label_3->height()*factorHeight);
     ui->beginScanBtn->setGeometry(ui->beginScanBtn->x()*factorWidth,ui->beginScanBtn->y()*factorHeight,ui->beginScanBtn->width()*factorWidth,ui->beginScanBtn->height()*factorHeight);
     ui->label_2->setGeometry(ui->label_2->x()*factorWidth,ui->label_2->y()*factorHeight,ui->label_2->width()*factorWidth,ui->label_2->height()*factorHeight);
@@ -206,6 +246,7 @@ void PostureDialog::playCamer(){
 void PostureDialog::moveLine()
 {
 
+
     int x=ui->scanLineLable->x();
     int y=ui->scanLineLable->y()+3;
     int width=ui->scanLineLable->width();
@@ -217,6 +258,7 @@ void PostureDialog::moveLine()
     ui->scanLineLable->setGeometry(x,y,width,height);
 
 }
+
 
 void PostureDialog::pauseBtnClick(int time)
 {
@@ -234,16 +276,20 @@ void PostureDialog::pauseBtnClick(int time)
 
         this->pauseHalfOneHoueAction->setVisible(false);
         this->pauseOneHoueAction->setVisible(false);
+        this->changeActionShowStatus(this->STATUS_STOP);
         this->myTrayIcon->show();
     }else{
         this->detectThread.setRunFlag(true);
         ui->pauseBtn->setText(tr("休息"));
+        this->pauseAction->setText(tr("休息"));
         this->pauseHalfOneHoueAction->setVisible(true);
         this->pauseOneHoueAction->setVisible(true);
         this->pauseTimer.stop();
         this->detectThread.start();
+        this->changeActionShowStatus(this->STATUS_DETACT);
         this->myTrayIcon->show();
     }
+
 }
 
 void PostureDialog::pauseDetectTimeout()
@@ -271,20 +317,23 @@ void PostureDialog::pauseOneHoueActionClick()
 void PostureDialog::scanPosture(){
     disconnect(&(this->timer),SIGNAL(timeout()),this,SLOT(playCamer()));
 
-    ui->scanLineLable->setPixmap(QPixmap("image/scanline.jpg"));
+//    ui->scanLineLable->setPixmap(QPixmap("image/scanline.jpg"));
     connect(&(this->scanLineTimer),SIGNAL(timeout()),this,SLOT(moveLine()));
     this->scanLineTimer.start(10);
     ui->beginScanBtn->setText(tr("重新扫描正确坐姿"));
     this->detectThread.setRunFlag(true);
     this->detectThread.start();
+    this->changeActionShowStatus(this->STATUS_DETACT);
 
 }
 
 void PostureDialog::reScanPosture()
 {
+    ui->scanLineLable->show();
     connect(&(this->timer),SIGNAL(timeout()),this,SLOT(playCamer()));
     this->detectThread.setRunFlag(false);
     ui->stackedWidget->setCurrentIndex(0);
+    this->show();
 
 
 }
@@ -409,15 +458,17 @@ void PostureDialog::httpFinished()
 
 void PostureDialog::submitAdvise()
 {
-AdviseDialog *dlg=new AdviseDialog(this);
+    AdviseDialog *dlg=new AdviseDialog(this);
 
-dlg->show();
+    dlg->show();
 
 }
 void PostureDialog::detectUpdate()
 {
 
-    this->url=QUrl("http://localhost/index.php/Home/Index/checklatestversion?projectid=2");
+    this->url=QUrl("http://managerverison.sinaapp.com/index.php/Index/checklatestversion?projectid=1");
+
+
     this->requestType=1;
     this->reply = qnam.get(QNetworkRequest(url));
     connect(reply, SIGNAL(finished()), this, SLOT(httpFinished()));

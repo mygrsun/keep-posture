@@ -34,62 +34,17 @@
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: qconicalgradient(cx:0, cy:0, angle:135, stop:0 rgba(255, 255, 0, 69), stop:0.375 rgba(255, 255, 0, 69), stop:0.423533 rgba(251, 255, 0, 145), stop:0.45 rgba(247, 255, 0, 208), stop:0.477581 rgba(255, 244, 71, 130), stop:0.518717 rgba(255, 218, 71, 130), stop:0.55 rgba(255, 255, 0, 255), stop:0.57754 rgba(255, 203, 0, 130), stop:0.625 rgba(255, 255, 0, 69), stop:1 rgba(255, 255, 0, 69));</string>
+    <string notr="true"/>
    </property>
    <property name="currentIndex">
     <number>0</number>
    </property>
    <widget class="QWidget" name="page">
-    <widget class="QLabel" name="noticeLable">
-     <property name="geometry">
-      <rect>
-       <x>270</x>
-       <y>120</y>
-       <width>491</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>30</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: #FFCC99;</string>
-     </property>
-     <property name="text">
-      <string>养成良好坐姿习惯</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>270</x>
-       <y>180</y>
-       <width>491</width>
-       <height>401</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="res.qrc">:/imgs/image/standardposture.jpg</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
     <widget class="QPushButton" name="beginScanBtn">
      <property name="geometry">
       <rect>
-       <x>770</x>
-       <y>480</y>
+       <x>840</x>
+       <y>270</y>
        <width>440</width>
        <height>101</height>
       </rect>
@@ -109,16 +64,19 @@
     <widget class="QLabel" name="pframeLable">
      <property name="geometry">
       <rect>
-       <x>770</x>
-       <y>120</y>
-       <width>440</width>
-       <height>331</height>
+       <x>170</x>
+       <y>170</y>
+       <width>600</width>
+       <height>500</height>
       </rect>
      </property>
      <property name="font">
       <font>
        <pointsize>35</pointsize>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 197, 251);</string>
      </property>
      <property name="text">
       <string/>
@@ -130,64 +88,30 @@
     <widget class="QLabel" name="scanLineLable">
      <property name="geometry">
       <rect>
-       <x>770</x>
-       <y>180</y>
-       <width>440</width>
+       <x>170</x>
+       <y>170</y>
+       <width>600</width>
        <height>3</height>
       </rect>
      </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_5">
-     <property name="geometry">
-      <rect>
-       <x>470</x>
-       <y>600</y>
-       <width>111</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>15</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>正确的坐姿</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_6">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>1366</width>
-       <height>41</height>
-      </rect>
-     </property>
      <property name="styleSheet">
-      <string notr="true">background-color:#996633;</string>
+      <string notr="true">background-color: rgb(255, 255, 37);</string>
      </property>
      <property name="text">
       <string/>
      </property>
     </widget>
-    <widget class="QPushButton" name="submitAdviseBtn">
+    <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>1280</x>
-       <y>340</y>
-       <width>75</width>
-       <height>23</height>
+       <x>850</x>
+       <y>250</y>
+       <width>191</width>
+       <height>16</height>
       </rect>
      </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(85, 0, 0);</string>
-     </property>
      <property name="text">
-      <string>提交</string>
+      <string>姿势坐正后点击扫描坐姿</string>
      </property>
     </widget>
    </widget>

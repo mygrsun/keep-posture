@@ -1,5 +1,4 @@
-﻿
-#include "posturedialog.h"
+﻿#include "posturedialog.h"
 #include <QApplication>
 #include <QSettings>
 #include <QString>
@@ -13,9 +12,7 @@ void detectNewVersion();
 #endif
 int main(int argc, char *argv[])
 {
-      QApplication a(argc, argv);
-      QLabel *label = new QLabel("你好！");
-      label->show();
+    QApplication a(argc, argv);
     startDetect t;
     QTimer::singleShot(0, &t, SLOT(detect()));
     QApplication::addLibraryPath("./plugins");
@@ -24,8 +21,6 @@ int main(int argc, char *argv[])
 
     PostureDialog w;
     t.setDlg(&w);
-    //    w.show();
-
 
     return a.exec();
 }
